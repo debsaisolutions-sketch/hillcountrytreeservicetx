@@ -1,0 +1,18 @@
+name: Lead form checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Block placeholder inboxes and missing assets
+        run: python3 scripts/check-lead-forms.py
+      - name: Mocked lead submit
+        run: node scripts/test-tdp-leads.mjs
